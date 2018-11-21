@@ -1,0 +1,222 @@
+very@ubuntu:~$ sudo mysql -u root -p
+[sudo] password for very: 
+
+mysql> use hello_mysql;
+
+mysql> create table GSo( 
+    -> id int auto_increment primary key, 
+    -> name varchar(20) not null, 
+    -> gzb int(10));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> insert into GSo(id,name,gzb) values(1,"zhao",4000),(2,"qian",3000),(3,"sun",3500),(4,"li",4500),(5,"zhou",5000), (6,"wu",8000),(7,"lu",7600),(8,"zhang",6000),(9,"shi",3800),(10,"xing",7000),(11,"zhu",10000), (12,"jiao",9800),(13,"zheng",8000),(14,"ru",8500),(15,"ying",15000),(16,"chao",7800);
+Query OK, 16 rows affected (0.12 sec)
+Records: 16  Duplicates: 0  Warnings: 0
+
+mysql> select * from GSo;
++----+-------+-------+
+| id | name  | gzb   |
++----+-------+-------+
+|  1 | zhao  |  4000 |
+|  2 | qian  |  3000 |
+|  3 | sun   |  3500 |
+|  4 | li    |  4500 |
+|  5 | zhou  |  5000 |
+|  6 | wu    |  8000 |
+|  7 | lu    |  7600 |
+|  8 | zhang |  6000 |
+|  9 | shi   |  3800 |
+| 10 | xing  |  7000 |
+| 11 | zhu   | 10000 |
+| 12 | jiao  |  9800 |
+| 13 | zheng |  8000 |
+| 14 | ru    |  8500 |
+| 15 | ying  | 15000 |
+| 16 | chao  |  7800 |
++----+-------+-------+
+16 rows in set (0.00 sec)
+
+mysql> create table GSt( id int auto_increment primary key, name varchar(20) not null, gzb int(10));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> insert into GSt(id,name,gzb) values(1,"xiao",5000),(2,"hui",8000),(3,"rui",4500),(4,"ying",5500),(5,"jian",6700), (6,"feng",8700),(7,"min",7900),(8,"lei",6880),(9,"ya",9780),(10,"jing",7780),(11,"cao",11000), (12,"luo",9877),(13,"yuan",8099),(14,"cong",11000),(15,"guo",12340),(16,"zou",6789),(17,"jin",9876);
+Query OK, 17 rows affected (0.09 sec)
+Records: 17  Duplicates: 0  Warnings: 0
+
+mysql> select * from GSt;
++----+------+-------+
+| id | name | gzb   |
++----+------+-------+
+|  1 | xiao |  5000 |
+|  2 | hui  |  8000 |
+|  3 | rui  |  4500 |
+|  4 | ying |  5500 |
+|  5 | jian |  6700 |
+|  6 | feng |  8700 |
+|  7 | min  |  7900 |
+|  8 | lei  |  6880 |
+|  9 | ya   |  9780 |
+| 10 | jing |  7780 |
+| 11 | cao  | 11000 |
+| 12 | luo  |  9877 |
+| 13 | yuan |  8099 |
+| 14 | cong | 11000 |
+| 15 | guo  | 12340 |
+| 16 | zou  |  6789 |
+| 17 | jin  |  9876 |
++----+------+-------+
+17 rows in set (0.00 sec)
+
+mysql> select sum(gzb),max(gzb),min(gzb) from GSo;
++----------+----------+----------+
+| sum(gzb) | max(gzb) | min(gzb) |
++----------+----------+----------+
+|   111500 |    15000 |     3000 |
++----------+----------+----------+
+1 row in set (0.07 sec)
+
+mysql> select sum(gzb),max(gzb),min(gzb) from GSt;
++----------+----------+----------+
+| sum(gzb) | max(gzb) | min(gzb) |
++----------+----------+----------+
+|   139721 |    12340 |     4500 |
++----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select 15000>12340;
++-------------+
+| 15000>12340 |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select * from GSo order by gzb desc;
++----+-------+-------+
+| id | name  | gzb   |
++----+-------+-------+
+| 15 | ying  | 15000 |
+| 11 | zhu   | 10000 |
+| 12 | jiao  |  9800 |
+| 14 | ru    |  8500 |
+|  6 | wu    |  8000 |
+| 13 | zheng |  8000 |
+| 16 | chao  |  7800 |
+|  7 | lu    |  7600 |
+| 10 | xing  |  7000 |
+|  8 | zhang |  6000 |
+|  5 | zhou  |  5000 |
+|  4 | li    |  4500 |
+|  1 | zhao  |  4000 |
+|  9 | shi   |  3800 |
+|  3 | sun   |  3500 |
+|  2 | qian  |  3000 |
++----+-------+-------+
+16 rows in set (0.00 sec)
+
+mysql> select * from GSt order by gzb desc;
++----+------+-------+
+| id | name | gzb   |
++----+------+-------+
+| 15 | guo  | 12340 |
+| 14 | cong | 11000 |
+| 11 | cao  | 11000 |
+| 12 | luo  |  9877 |
+| 17 | jin  |  9876 |
+|  9 | ya   |  9780 |
+|  6 | feng |  8700 |
+| 13 | yuan |  8099 |
+|  2 | hui  |  8000 |
+|  7 | min  |  7900 |
+| 10 | jing |  7780 |
+|  8 | lei  |  6880 |
+| 16 | zou  |  6789 |
+|  5 | jian |  6700 |
+|  4 | ying |  5500 |
+|  1 | xiao |  5000 |
+|  3 | rui  |  4500 |
++----+------+-------+
+17 rows in set (0.05 sec)
+
+mysql> select * from GSo order by gzb desc limit 5;
++----+------+-------+
+| id | name | gzb   |
++----+------+-------+
+| 15 | ying | 15000 |
+| 11 | zhu  | 10000 |
+| 12 | jiao |  9800 |
+| 14 | ru   |  8500 |
+|  6 | wu   |  8000 |
++----+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GSo order by gzb desc limit 6,5;
++----+-------+------+
+| id | name  | gzb  |
++----+-------+------+
+| 16 | chao  | 7800 |
+|  7 | lu    | 7600 |
+| 10 | xing  | 7000 |
+|  8 | zhang | 6000 |
+|  5 | zhou  | 5000 |
++----+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GSo order by gzb desc limit 11,5;
++----+------+------+
+| id | name | gzb  |
++----+------+------+
+|  4 | li   | 4500 |
+|  1 | zhao | 4000 |
+|  9 | shi  | 3800 |
+|  3 | sun  | 3500 |
+|  2 | qian | 3000 |
++----+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GSt order by gzb desc limit 5;
++----+------+-------+
+| id | name | gzb   |
++----+------+-------+
+| 15 | guo  | 12340 |
+| 11 | cao  | 11000 |
+| 14 | cong | 11000 |
+| 12 | luo  |  9877 |
+| 17 | jin  |  9876 |
++----+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GSt order by gzb desc limit 6,5;
++----+------+------+
+| id | name | gzb  |
++----+------+------+
+|  6 | feng | 8700 |
+| 13 | yuan | 8099 |
+|  2 | hui  | 8000 |
+|  7 | min  | 7900 |
+| 10 | jing | 7780 |
++----+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GSt order by gzb desc limit 11,5;
++----+------+------+
+| id | name | gzb  |
++----+------+------+
+|  8 | lei  | 6880 |
+| 16 | zou  | 6789 |
+|  5 | jian | 6700 |
+|  4 | ying | 5500 |
+|  1 | xiao | 5000 |
++----+------+------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> select 3000>4500;
++-----------+
+| 3000>4500 |
++-----------+
+|         0 |
++-----------+
+1 row in set (0.00 sec)
+
