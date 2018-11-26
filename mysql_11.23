@@ -1,0 +1,204 @@
+1-FILM:
+mysql> use hello_mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Query OK, 0 rows affected (0.83 sec)
+
+Database changed
+mysql> create table film(
+    -> name varchar(20),
+    -> year int,
+    -> director varchar(30),
+    -> grade varchar(40));
+Query OK, 0 rows affected (0.83 sec)
+
+mysql> insert into film(name,year,director,grade) values("ying",2018,"zhang","8"),("wo bu shi yao shen",2018,"wen","9"), ("yewen",1940,"zhou","7"),("yewen2",1987,"zhang","7.8"),("yewen3",1996,"lui","9.8");
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from film;
++--------------------+------+----------+-------+
+| name               | year | director | grade |
++--------------------+------+----------+-------+
+| ying               | 2018 | zhang    | 8     |
+| wo bu shi yao shen | 2018 | wen      | 9     |
+| yewen              | 1940 | zhou     | 7     |
+| yewen2             | 1987 | zhang    | 7.8   |
+| yewen3             | 1996 | lui      | 9.8   |
++--------------------+------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from film where name like "%yewen%";
++--------+------+----------+-------+
+| name   | year | director | grade |
++--------+------+----------+-------+
+| yewen  | 1940 | zhou     | 7     |
+| yewen2 | 1987 | zhang    | 7.8   |
+| yewen3 | 1996 | lui      | 9.8   |
++--------+------+----------+-------+
+3 rows in set (0.07 sec)
+
+mysql> select * from film where director like "zha%";
++--------+------+----------+-------+
+| name   | year | director | grade |
++--------+------+----------+-------+
+| ying   | 2018 | zhang    | 8     |
+| yewen2 | 1987 | zhang    | 7.8   |
++--------+------+----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name from film where year=1996;
++--------+
+| name   |
++--------+
+| yewen3 |
++--------+
+1 row in set (0.02 sec)
+
+mysql> select max(grade) from film;
++------------+
+| max(grade) |
++------------+
+| 9.8        |
++------------+
+1 row in set (0.05 sec)
+
+mysql> select* from film where film.grade in(
+    -> select max(grade) from film);
++--------+------+----------+-------+
+| name   | year | director | grade |
++--------+------+----------+-------+
+| yewen3 | 1996 | lui      | 9.8   |
++--------+------+----------+-------+
+1 row in set (0.07 sec)
+
+2-COLLECT:
+mysql> create table collect(
+    -> id int auto_increment primary key,
+    -> name varchar(20));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into collect(id,name) values(1,"book"),(2,"shoes"),(3,"cap"),(4,"jack");
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from collect;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | book  |
+|  2 | shoes |
+|  3 | cap   |
+|  4 | jack  |
++----+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into collect(name) values("bag");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from collect;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | book  |
+|  2 | shoes |
+|  3 | cap   |
+|  4 | jack  |
+|  5 | bag   |
++----+-------+
+5 rows in set (0.00 sec)
+
+mysql> delete from collect where name="shoes";
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from collect;
++----+------+
+| id | name |
++----+------+
+|  1 | book |
+|  3 | cap  |
+|  4 | jack |
+|  5 | bag  |
++----+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from collect where name="book";
++----+------+
+| id | name |
++----+------+
+|  1 | book |
++----+------+
+1 row in set (0.01 sec)
+
+mysql> select * from collect where id=4;
++----+------+
+| id | name |
++----+------+
+|  4 | jack |
++----+------+
+1 row in set (0.34 sec)
+
+3-emp/dept
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980/12/17 |  800 |         | 20     |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00  | 30     |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981/2/22  | 1250 | 500.00  | 30     |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |         | 20     |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981/9/28  | 1250 | 1400.00 | 30     |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |         | 30     |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |         | 10     |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |         | 20     |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |         | 10     |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00    | 30     |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987/5/23  | 1100 |         | 20     |
+|  7900 | JAMES  | CLERK     | 7698 | 1981/12/3  |  950 |         | 30     |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |         | 20     |
+|  7934 | MILLER | CLERK     | 7782 | 1982/1/23  | 1300 |         | 0      |
++-------+--------+-----------+------+------------+------+---------+--------+
+14 rows in set (0.03 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp,dept where emp.empno in( select max(empno) from emp group by deptno having count(deptno)>1 and emp.deptno=dept.deptno);
++-------+-------+-----------+------+------------+------+------+--------+--------+------------+----------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | DEPTNO | DNAME      | LOC      |
++-------+-------+-----------+------+------------+------+------+--------+--------+------------+----------+
+|  7839 | KING  | PRESIDENT |      | 1981/11/17 | 5000 |      | 10     |     10 | ACCOUNTING | NEW YORK |
+|  7900 | JAMES | CLERK     | 7698 | 1981/12/3  |  950 |      | 30     |     30 | SALES      | CHICAGO  |
+|  7902 | FORD  | ANALYST   | 7566 | 1981/12/3  | 3000 |      | 20     |     20 | RESEARCH   | DALLAS   |
++-------+-------+-----------+------+------------+------+------+--------+--------+------------+----------+
+3 rows in set (0.07 sec)
+
+3-user
+mysql> create table user( id int auto_increment primary key, name varchar(20), method varchar(10), time date);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into user(id,name,method,time)  values(155,"kk","app","2018-9-26"), (257,"hh","web","2018-11-1"), (162,"ll","ipad","2018-11-16");        
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select case when abs(datediff(time,now()))>30 then "niqusiba"  when abs(datediff(time,now()))>9 then "nitemehuibuhuilai" when abs(datediff(time,now()))>7 then "kuaihuilaixiaotiancai"  end from user;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| case when abs(datediff(time,now()))>30 then "niqusiba"  when abs(datediff(time,now()))>9 then "nitemehuibuhuilai" when abs(datediff(time,now()))>7 then "kuaihuilaixiaotiancai"  end |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| niqusiba                                                                                                                                                                             |
+| kuaihuilaixiaotiancai                                                                                                                                                                |
+| nitemehuibuhuilai                                                                                                                                                                    |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+
+
+
